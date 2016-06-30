@@ -39,6 +39,7 @@ make_tags() {
     local pkgname=$(source "$project/APKBUILD" && echo $pkgname)
     local pkgver=$(source "$project/APKBUILD" && echo $pkgver)
     local artifact="${pkgname}-${pkgver}"
+    cd "$project"
     git tag -a -f -m "$artifact" "$artifact"
 }
 
