@@ -1,0 +1,24 @@
+# eclipse meta
+.project
+
+# build resources
+src/
+pkg/
+
+# build resources
+*.xz
+*.gz
+*.tar
+*.tgz
+*.zip
+*.bz2
+*.tbz2
+*.tags
+*.part
+
+# build resources
+build.log
+
+# build results
+*.apk
+APKINDEX.tar.gz

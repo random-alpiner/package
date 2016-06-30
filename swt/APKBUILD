@@ -1,0 +1,64 @@
+# Contributor: Guillaume Alaux <guillaume@archlinux.org>
+# Maintainer: Andrei Pozolotin <Andrei.Pozolotin@gmail.com>
+
+pkgdesc='SWT: The Standard Widget Toolkit'
+url='http://www.eclipse.org/swt/'
+license="EPL"
+pkgname=swt
+pkgver=4.5.2
+pkgrel=1
+_swt_date=201602121500
+arch="x86 x86_64"
+_swt_arch="$CARCH"
+source="build.xml http://download.eclipse.org/eclipse/downloads/drops4/R-${pkgver}-${_swt_date}/swt-${pkgver}-gtk-linux-${_swt_arch}.zip"
+options="!strip"
+depends="openjdk8-jre gtk+2.0" 
+optdepends="glu libgnome webkitgtk2"
+makedepends="$depends $optdepends gtk+2.0-dev glu-dev libgnome-dev libxt-dev libxtst-dev apache-ant zip unzip pkgconfig" 
+
+_swt_java_home="/usr/lib/jvm/default-jvm"
+_swt_source_archive="src.zip"
+_swt_source_extract="src_zip"
+_swt_lib_folder="usr/lib"
+_swt_jar_folder="usr/share/java"
+
+build() {
+  export JAVA_HOME="${_swt_java_home}"
+  
+  cd "$srcdir"
+  unzip -o -q "${_swt_source_archive}" -d "${_swt_source_extract}"
+  
+  # libs
+  cd "$srcdir/${_swt_source_extract}"
+  ./build.sh 
+
+  # jars
+  cd "$srcdir"
+  ant -f build.xml 'compile'
+}
+
+package() {
+  export JAVA_HOME="${_swt_java_home}"
+  export OUTPUT_DIR="$pkgdir/${_swt_lib_folder}"
+  
+  install -d -m755 ${OUTPUT_DIR} 
+
+  # libs
+  cd "$srcdir/${_swt_source_extract}"
+  ./build.sh 'install'
+  
+  local path= name= link=
+  for path in "$OUTPUT_DIR"/libswt*.so ; do
+      name=$(basename "$path")
+      link=$(echo "$name" | sed -r -e "s%([^0-9]+)-[0-9]+[.]so%\1.so%")
+      echo "library: $name -> $link"
+      ln -s "$name" "$OUTPUT_DIR/$link" 
+  done
+
+  # jars
+  cd "$srcdir"
+  ant -f build.xml 'jar'
+  local target="${pkgdir}/${_swt_jar_folder}"
+  install -D -m755 "swt.jar" "$target/swt-${pkgver}.jar"
+  ln -s  "swt-${pkgver}.jar" "$target/swt.jar"
+}

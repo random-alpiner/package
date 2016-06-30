@@ -1,0 +1,25 @@
+# Maintainer: Andrei Pozolotin <Andrei.Pozolotin@gmail.com>
+
+pkgdesc="App Container Image Build Command"
+url="https://github.com/appc/acbuild"
+license="Apache"
+pkgname="acbuild"
+pkgver=0.3.1
+pkgrel=1
+arch="x86 x86_64"
+_artifact="${pkgname}-${pkgver}"
+source="${_artifact}.tar.gz::${url}/archive/v${pkgver}.tar.gz"
+options="!strip"
+depends="" 
+optdepends="gnupg"
+makedepends="$depends $optdepends go" 
+
+build() {
+    cd "${srcdir}/${_artifact}"
+    ./build
+}
+
+package() {
+    cd "${srcdir}/${_artifact}"
+    install -D -m755 bin/$pkgname "$pkgdir/usr/bin/$pkgname"
+}

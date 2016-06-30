@@ -1,0 +1,20 @@
+<project name="swt" default="init" basedir=".">
+
+	<property name="srcdir" location="." />
+	<property name="dstdir" location="target" />
+	<property name="version" value="1.6" />
+
+	<target name="init">
+		<tstamp />
+		<mkdir dir="${dstdir}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${srcdir}" destdir="${dstdir}" source="${version}" target="${version}" includeantruntime="false" />
+	</target>
+
+	<target name="jar">
+		<jar basedir="${dstdir}" destfile="swt.jar" />
+	</target>
+
+</project>
