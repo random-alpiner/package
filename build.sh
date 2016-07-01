@@ -45,8 +45,8 @@ make_tags() {
 
 build_apk() {
     cd "$project"
-    abuild -P "$repo_dir" checksum
-    abuild -P "$repo_dir"
+    abuild checksum
+    abuild
 }
 
 ###
