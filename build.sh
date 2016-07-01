@@ -25,7 +25,7 @@ repo_put() {
 
 repo_zero() {
     cd "$repo_dir"
-    local pointer=$(git commit-tree HEAD^{tree} -m "repo-zero")
+    local pointer=$(git commit-tree HEAD^{tree} -m "current")
     git reset $pointer
     git push --force
 }
