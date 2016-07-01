@@ -23,7 +23,7 @@ repo_put() {
     git push
 }
 
-repo_zero() {
+repo_reset() {
     cd "$repo_dir"
     local pointer=$(git commit-tree HEAD^{tree} -m "current")
     git reset $pointer
@@ -69,4 +69,4 @@ make_tags
 build_apk
 copy_keys
 repo_put
-repo_zero
+repo_reset
