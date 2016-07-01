@@ -23,6 +23,13 @@ repo_put() {
     git push
 }
 
+repo_zero() {
+    cd "$repo_dir"
+    local pointer=$(git commit-tree HEAD^{tree} -m "repo-zero")
+    git reset $pointer
+    git push --force
+}
+
 fetch_deps() {
     local deps_list=$(source "$project/APKBUILD" && echo $makedepends)
     sudo apk add $deps_list
@@ -62,3 +69,4 @@ make_tags
 build_apk
 copy_keys
 repo_put
+repo_zero
