@@ -17,12 +17,21 @@ makedepends="$depends $optdepends dovecot-dev autoconf automake"
 build() {
     cd "${srcdir}/${_artifact}"
     ln -f -s /usr/share/automake-1.15/install-sh install-sh
-    autoconf contrib/configure.ac > configure
-    ./configure 
+    #autoconf contrib/configure.ac > configure
+    
+    ./configure \
+        --build=$CBUILD \
+        --host=$CHOST \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --localstatedir=/var \
+        --mandir=/usr/share/man \
+                
     make build 
 }
 
 package() {
     cd "${srcdir}/${_artifact}"
+    
     make install
 }
