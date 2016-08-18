@@ -1,0 +1,26 @@
+# Maintainer: Andrei Pozolotin <Andrei.Pozolotin@gmail.com>
+
+pkgdesc="Dovecot MBC Plugin"
+url="https://github.com/random-alpiner/dovecot-mbc"
+license="Apache"
+pkgname="dovecot-mbc"
+pkgver=1
+pkgrel=1
+arch="x86 x86_64"
+_artifact="${pkgname}-${pkgver}"
+source="${_artifact}.tar.gz::${url}/archive/v${pkgver}.tar.gz"
+options="!strip"
+depends="" 
+optdepends=""
+makedepends="$depends $optdepends dovecot-dev autoconf automake" 
+
+build() {
+    cd "${srcdir}/${_artifact}"
+    ./configure 
+    make build 
+}
+
+package() {
+    cd "${srcdir}/${_artifact}"
+    make install
+}
