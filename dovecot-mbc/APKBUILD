@@ -17,7 +17,7 @@ makedepends="$depends $optdepends dovecot-dev autoconf automake"
 build() {
     cd "${srcdir}/${_artifact}"
     ln -f -s /usr/share/automake-1.15/install-sh install-sh
-    autoreconf -vif contrib/configure.ac
+    autoconf contrib/configure.ac > configure
     ./configure 
     make build 
 }
