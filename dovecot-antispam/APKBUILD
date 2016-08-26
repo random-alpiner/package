@@ -1,6 +1,7 @@
 # Maintainer: Andrei Pozolotin <Andrei.Pozolotin@gmail.com>
 
 pkgdesc="Dovecot Antispam Plugin"
+# https://johannes.sipsolutions.net/Projects/dovecot-antispam
 url="http://git.sipsolutions.net"
 license="Apache"
 pkgname="dovecot-antispam"
@@ -10,7 +11,7 @@ arch="x86 x86_64"
 _hash_="963c046"
 _artifact_="${pkgname}-${_hash_}"
 _query_="?p=dovecot-antispam.git;a=snapshot;h=${_hash_};sf=tgz"
-source="${_artifact_}.tar.gz::${url}/${_query_}"
+source="${_artifact_}.tar.gz::${url}/${_query_} .config version.sh"
 options="!strip"
 depends="" 
 optdepends=""
@@ -18,17 +19,10 @@ makedepends="$depends $optdepends dovecot-dev autoconf automake"
 
 build() {
     cd "${srcdir}/${_artifact_}"
-    #ln -f -s /usr/share/automake-1.15/install-sh install-sh
-    
-    echo > .config
-    echo "DOVECOT=/usr/include/dovecot" >> .config
-    echo "INSTALLDIR=/usr/lib/dovecot" >> .config
-    
     make
 }
 
 package() {
     cd "${srcdir}/${_artifact_}"
-    
     make install DESTDIR="$pkgdir"
 }
