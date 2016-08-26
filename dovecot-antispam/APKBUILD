@@ -11,14 +11,15 @@ arch="x86 x86_64"
 _hash_="963c046"
 _artifact_="${pkgname}-${_hash_}"
 _query_="?p=dovecot-antispam.git;a=snapshot;h=${_hash_};sf=tgz"
-source="${_artifact_}.tar.gz::${url}/${_query_} build/.config build/version.sh"
+source="${_artifact_}.tar.gz::${url}/${_query_} .config version.sh"
 options="!strip"
 depends="" 
 optdepends=""
 makedepends="$depends $optdepends dovecot-dev autoconf automake" 
 
 build() {
-    cp -f -r "${srcdir}/build/." "${srcdir}/${_artifact_}"/
+    cd "${srcdir}"
+    cp -f ".config" "version.sh" "${srcdir}/${_artifact_}/"
     cd "${srcdir}/${_artifact_}"
     make
 }
