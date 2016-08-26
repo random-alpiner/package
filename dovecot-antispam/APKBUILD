@@ -7,8 +7,9 @@ pkgname="dovecot-antispam"
 pkgver=1
 pkgrel=1
 arch="x86 x86_64"
-_artifact_="${pkgname}-${pkgver}"
-_query_="?p=dovecot-antispam.git;a=snapshot;h=963c046c19b5d7019c607a8b648cae7b53d93ce2;sf=tgz"
+_hash_="963c046"
+_artifact_="${pkgname}-${_hash_}"
+_query_="?p=dovecot-antispam.git;a=snapshot;h=${_hash_};sf=tgz"
 source="${_artifact_}.tar.gz::${url}/${_query_}"
 options="!strip"
 depends="" 
