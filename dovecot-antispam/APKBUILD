@@ -26,5 +26,6 @@ build() {
 
 package() {
     cd "${srcdir}/${_artifact_}"
+    install -d "$pkgdir/usr/lib/dovecot"
     make install DESTDIR="$pkgdir"
 }
